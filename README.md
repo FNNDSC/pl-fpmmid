@@ -1,13 +1,15 @@
 
 
 # pl-fpmmid
-<img src="imgs/header.png" alt="J"/>
 
-# Federated Prediction Models for Medical Imaging Data (FPMMID)
 
 [![Version](https://img.shields.io/docker/v/fnndsc/pl-fpmmid?sort=semver)](https://hub.docker.com/r/fnndsc/pl-fpmmid)
 [![MIT License](https://img.shields.io/github/license/fnndsc/pl-fpmmid)](https://github.com/FNNDSC/pl-fpmmid/blob/main/LICENSE)
 [![ci](https://github.com/FNNDSC/pl-fpmmid/actions/workflows/ci.yml/badge.svg)](https://github.com/FNNDSC/pl-fpmmid/actions/workflows/ci.yml)
+<img src="imgs/header.png" alt="J"/>
+
+# Federated Prediction Models for Medical Imaging Data (FPMMID)
+
 
 ## Description
 FPMMID will provide federated Machine-Learning and Deep-Learning
