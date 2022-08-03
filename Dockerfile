@@ -1,19 +1,16 @@
 # Python version can be changed, e.g.
 # FROM python:3.8
 # FROM docker.io/fnndsc/conda:python3.10.2-cuda11.6.0
-FROM docker.io/python:3.10.5-slim-buster
+FROM tensorflow/tensorflow:latest-gpu-py3
 
-LABEL org.opencontainers.image.authors="FNNDSC <dev@babyMRI.org>" \
-      org.opencontainers.image.title="ChRIS Plugin Title" \
-      org.opencontainers.image.description="A ChRIS plugin that..."
-
-WORKDIR /usr/local/src/app
+WORKDIR /usr/local/src
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
+RUN pip install horovod[tensorflow,keras,pyspark]==0.24.3 --no-cache-dir
 
 COPY . .
-ARG extras_require=none
-RUN pip install ".[${extras_require}]"
 
-CMD ["commandname", "--help"]
+RUN pip install .
+
+CMD ["fpmmid", "--help"]

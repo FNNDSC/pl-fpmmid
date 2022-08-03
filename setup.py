@@ -1,31 +1,25 @@
+from os import path
 from setuptools import setup
 
 setup(
-    name='chris-plugin-template',
+    name='fpmmid',
     version='1.0.0',
     description='A ChRIS DS plugin template',
     author='FNNDSC',
     author_email='dev@babyMRI.org',
-    url='https://github.com/FNNDSC/python-chrisapp-template',
-    py_modules=['app'],
-    install_requires=['chris_plugin'],
+    url='https://github.com/FNNDSC/pl-fpmmid',
+    py_modules=['fpmmid'],
+    packages   = ['model','scripts.run','scripts.run.modules'],
+    install_requires=['chrisapp'],
+    test_suite       = 'nose.collector',
+    tests_require    = ['nose'],
     license='MIT',
+    zip_safe         = False,
+    python_requires  = '>=3.6',
     entry_points={
         'console_scripts': [
-            'commandname = app:main'
-        ]
-    },
-    classifiers=[
-        'License :: OSI Approved :: MIT License',
-        'Topic :: Scientific/Engineering',
-        'Topic :: Scientific/Engineering :: Bio-Informatics',
-        'Topic :: Scientific/Engineering :: Medical Science Apps.'
-    ],
-    extras_require={
-        'none': [],
-        'dev': [
-            'pytest~=7.1',
-            'pytest-mock~=3.8'
+            'fpmmid = fpmmid:main'
         ]
     }
+
 )
