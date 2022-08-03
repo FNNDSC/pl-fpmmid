@@ -1,6 +1,6 @@
 
 
-# ChRIS Plugin Title
+# pl-fpmmid
 
 [![Version](https://img.shields.io/docker/v/fnndsc/pl-fpmmid?sort=semver)](https://hub.docker.com/r/fnndsc/pl-fpmmid)
 [![MIT License](https://img.shields.io/github/license/fnndsc/pl-fpmmid)](https://github.com/FNNDSC/pl-fpmmid/blob/main/LICENSE)
