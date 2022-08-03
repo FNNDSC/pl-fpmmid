@@ -1,10 +1,23 @@
 
 
 # pl-fpmmid
+<img src="imgs/header.png" alt="J"/>
+
+# Federated Prediction Models for Medical Imaging Data (FPMMID)
 
 [![Version](https://img.shields.io/docker/v/fnndsc/pl-fpmmid?sort=semver)](https://hub.docker.com/r/fnndsc/pl-fpmmid)
 [![MIT License](https://img.shields.io/github/license/fnndsc/pl-fpmmid)](https://github.com/FNNDSC/pl-fpmmid/blob/main/LICENSE)
 [![ci](https://github.com/FNNDSC/pl-fpmmid/actions/workflows/ci.yml/badge.svg)](https://github.com/FNNDSC/pl-fpmmid/actions/workflows/ci.yml)
+
+## Description
+FPMMID will provide federated Machine-Learning and Deep-Learning
+ based Prediction Models for a myriad collection of Medical 
+Imaging data from various Data Acquisition systems across 
+the hospital. Currently, FPMMID provides fast-response predictive
+ 4-layer 3D segmentation of individual TW1 MR imaging scans. 
+FPMMID is currently being tested with the PING (Pediatric Imaging, 
+Neurocognition, and Genetics Data Repository) dataset 
+(paper link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4628902/pdf/nihms691152.pdf  
 
 `pl-fpmmid` is a [_ChRIS_](https://chrisproject.org/)
 _ds_ plugin which takes in ...  as input files and
