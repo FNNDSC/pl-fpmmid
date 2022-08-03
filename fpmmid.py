@@ -11,7 +11,8 @@
 import os
 from chrisapp.base import ChrisApp
 from scripts.run import pred
-
+import logging
+import sys
 
 
 
@@ -144,8 +145,26 @@ class Fpmmid(ChrisApp):
         print("")
         
         
-        input_file_path = os.path.join(options.inputdir, options.inputFile)
-        pred.main(input_file_path,options.outputdir, options.outputdir)
+        # Set up the logger
+        logger = logging.getLogger("eval")
+        logger.setLevel(logging.DEBUG)
+        logger.addHandler(logging.StreamHandler(stream=sys.stdout))
+        
+        
+        input_file_path_list = []
+        dir_list = []
+        for root,dirs,files in os.walk(options.inputdir):
+          for file in files:
+            if file == options.inputFile:
+                dir_list.append(root)
+                input_file_path_list.append(os.path.join(root,file))
+
+        for (input_file_path,out_file_path) in zip(input_file_path_list,dir_list):
+            out_file_path = out_file_path.replace(options.inputdir, options.outputdir)
+            os.makedirs(out_file_path,exist_ok = True)
+            logger.info("Running Inference on {}".format(input_file_path))
+            pred.main(input_file_path,out_file_path, out_file_path)
+            logger.info("Inference finished and stored in {}".format(out_file_path))
 
 
     def show_man_page(self):

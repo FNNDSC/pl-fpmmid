@@ -141,5 +141,6 @@ class Pred:
         # Write image
         self.obj_config.write_image(vol[0], mask_pred[0], out_dir, sid)
 
+
 if __name__ == "__main__":
     main()
