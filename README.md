@@ -2,11 +2,11 @@
 
 # ChRIS Plugin Title
 
-[![Version](https://img.shields.io/docker/v/fnndsc/pl-appname?sort=semver)](https://hub.docker.com/r/fnndsc/pl-appname)
-[![MIT License](https://img.shields.io/github/license/fnndsc/pl-appname)](https://github.com/FNNDSC/pl-appname/blob/main/LICENSE)
-[![ci](https://github.com/FNNDSC/pl-appname/actions/workflows/ci.yml/badge.svg)](https://github.com/FNNDSC/pl-appname/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/docker/v/fnndsc/pl-fpmmid?sort=semver)](https://hub.docker.com/r/fnndsc/pl-fpmmid)
+[![MIT License](https://img.shields.io/github/license/fnndsc/pl-fpmmid)](https://github.com/FNNDSC/pl-fpmmid/blob/main/LICENSE)
+[![ci](https://github.com/FNNDSC/pl-fpmmid/actions/workflows/ci.yml/badge.svg)](https://github.com/FNNDSC/pl-fpmmid/actions/workflows/ci.yml)
 
-`pl-appname` is a [_ChRIS_](https://chrisproject.org/)
+`pl-fpmmid` is a [_ChRIS_](https://chrisproject.org/)
 _ds_ plugin which takes in ...  as input files and
 creates ... as output files.
 
@@ -16,7 +16,7 @@ creates ... as output files.
 
 ## Installation
 
-`pl-appname` is a _[ChRIS](https://chrisproject.org/) plugin_, meaning it can
+`pl-fpmmid` is a _[ChRIS](https://chrisproject.org/) plugin_, meaning it can
 run from either within _ChRIS_ or the command-line.
 
 [![Get it from chrisstore.co](https://ipfs.babymri.org/ipfs/QmaQM9dUAYFjLVn3PpNTrpbKVavvSTxNLE5BocRCW1UoXG/light.png)](https://chrisstore.co/plugin/pl-appname)
@@ -24,28 +24,28 @@ run from either within _ChRIS_ or the command-line.
 ## Local Usage
 
 To get started with local command-line usage, use [Apptainer](https://apptainer.org/)
-(a.k.a. Singularity) to run `pl-appname` as a container:
+(a.k.a. Singularity) to run `pl-fpmmid` as a container:
 
 ```shell
-singularity exec docker://fnndsc/pl-appname commandname [--args values...] input/ output/
+singularity exec docker://fnndsc/pl-fpmmid commandname [--args values...] input/ output/
 ```
 
 To print its available options, run:
 
 ```shell
-singularity exec docker://fnndsc/pl-appname commandname --help
+singularity exec docker://fnndsc/pl-fpmmid fpmmid --help
 ```
 
 ## Examples
 
-`commandname` requires two positional arguments: a directory containing
+`fpmmid` requires two positional arguments: a directory containing
 input data, and a directory where to create output data.
 First, create the input directory and move input data into it.
 
 ```shell
 mkdir incoming/ outgoing/
 mv some.dat other.dat incoming/
-singularity exec docker://fnndsc/pl-appname:latest commandname [--args] incoming/ outgoing/
+singularity exec docker://fnndsc/pl-fpmmid:latest fpmmid [--args] incoming/ outgoing/
 ```
 
 ## Development
@@ -57,7 +57,7 @@ Instructions for developers.
 Build a local container image:
 
 ```shell
-docker build -t localhost/fnndsc/pl-appname .
+docker build -t localhost/fnndsc/pl-fpmmid .
 ```
 
 ### Running
@@ -68,7 +68,7 @@ Mount the source code `app.py` into a container to try out changes without rebui
 docker run --rm -it --userns=host -u $(id -u):$(id -g) \
     -v $PWD/app.py:/usr/local/lib/python3.10/site-packages/app.py:ro \
     -v $PWD/in:/incoming:ro -v $PWD/out:/outgoing:rw -w /outgoing \
-    localhost/fnndsc/pl-appname commandname /incoming /outgoing
+    localhost/fnndsc/pl-fpmmid fpmmid /incoming /outgoing
 ```
 
 ### Testing
@@ -78,8 +78,8 @@ It's recommended to rebuild the image to ensure that sources are up-to-date.
 Use the option `--build-arg extras_require=dev` to install extra dependencies for testing.
 
 ```shell
-docker build -t localhost/fnndsc/pl-appname:dev --build-arg extras_require=dev .
-docker run --rm -it localhost/fnndsc/pl-appname:dev pytest
+docker build -t localhost/fnndsc/pl-fpmmid:dev --build-arg extras_require=dev .
+docker run --rm -it localhost/fnndsc/pl-fpmmid:dev pytest
 ```
 
 ## Release
@@ -96,8 +96,8 @@ Increase the version number in `setup.py` and commit this file.
 Build and push an image tagged by the version. For example, for version `1.2.3`:
 
 ```
-docker build -t docker.io/fnndsc/pl-appname:1.2.3 .
-docker push docker.io/fnndsc/pl-appname:1.2.3
+docker build -t docker.io/fnndsc/pl-fpmmid:1.2.3 .
+docker push docker.io/fnndsc/pl-fpmmid:1.2.3
 ```
 
 ### Get JSON Representation
@@ -106,5 +106,5 @@ Run [`chris_plugin_info`](https://github.com/FNNDSC/chris_plugin#usage)
 to produce a JSON description of this plugin, which can be uploaded to a _ChRIS Store_.
 
 ```shell
-docker run --rm localhost/fnndsc/pl-appname:dev chris_plugin_info > chris_plugin_info.json
+docker run --rm localhost/fnndsc/pl-fpmmid:dev chris_plugin_info > chris_plugin_info.json
 ```
