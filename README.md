@@ -1,51 +1,4 @@
-# _ChRIS_ Plugin Template
 
-This is a minimal template repository for _ChRIS_ plugin applications in Python.
-
-## About _ChRIS_ Plugins
-
-A _ChRIS_ plugin is a scientific data-processing software which can run anywhere all-the-same:
-in the cloud via a [web app](https://github.com/FNNDSC/ChRIS_ui/), or on your own laptop
-from the terminal. They are easy to build and easy to understand: most simply, a
-_ChRIS_ plugin is a command-line program which processes data from an input directory
-and creates data to an output directory with the usage
-`commandname [options...] inputdir/ outputdir/`.
-
-For more information, visit our website https://chrisproject.org
-
-## How to Use This Template
-
-Go to https://github.com/FNNDSC/python-chrisapp-template and click "Use this template".
-The newly created repository is ready to use right away.
-
-A script `bootstrap.sh` is provided to help fill in and rename values for your new project.
-It is optional to use.
-
-1. Edit the variables in `bootstrap.sh`
-2. Run `./bootstrap.sh`
-3. Follow the instructions it will print out
-
-## Example Plugins
-
-Here are some good, complete examples of _ChRIS_ plugins created from this template.
-
-- https://github.com/FNNDSC/pl-dcm2niix (basic command example)
-- https://github.com/FNNDSC/pl-mri-preview (uses [NiBabel](https://nipy.org/nibabel/))
-- https://github.com/FNNDSC/pl-fetal-cp-surface-extract (example using Python package project structure)
-
-## What's Inside
-
-| Path                       | Purpose                                                                                                                                                                                                  |
-|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `app.py`                   | Main script: start editing here!                                                                                                                                                                         |
-| `tests/`                   | Unit tests                                                                                                                                                                                               |
-| `setup.py`                 | [Python project metadata and installation script](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/#setup-py)                                                        |
-| `requirements.txt`         | List of Python dependencies                                                                                                                                                                              |
-| `Dockerfile`               | [Container image build recipe](https://docs.docker.com/engine/reference/builder/)                                                                                                                        |
-| `.github/workflows/ci.yml` | "continuous integration" using [Github Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions): automatic testing, building, and uploads to https://chrisstore.co |
-
-
-<!-- BEGIN README TEMPLATE
 
 # ChRIS Plugin Title
 
@@ -155,5 +108,3 @@ to produce a JSON description of this plugin, which can be uploaded to a _ChRIS 
 ```shell
 docker run --rm localhost/fnndsc/pl-appname:dev chris_plugin_info > chris_plugin_info.json
 ```
-
-END README TEMPLATE -->
