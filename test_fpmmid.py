@@ -30,4 +30,5 @@ class FpmmidTests(TestCase):
         self.app.run(options)
 
         # write your own assertions
-        self.assertEqual(options.outputdir, 'outputdir')
+        results = self.assertEqual(options.outputdir, 'outputdir')
+        print(results)

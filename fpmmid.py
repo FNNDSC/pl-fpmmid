@@ -127,9 +127,9 @@ class Fpmmid(ChrisApp):
         self.add_argument(  '--inputFile', '-i',
                             dest        = 'inputFile',
                             type        = str,
-                            optional    = False,
+                            optional    = True,
                             help        = 'name of the input (raw) file to process',
-                            default     = "")
+                            default     = "P0997_t1w.nii.gz")
 
     def run(self, options):
         """
