@@ -22,8 +22,7 @@ Neurocognition, and Genetics Data Repository) dataset
 (paper link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4628902/pdf/nihms691152.pdf  
 
 `pl-fpmmid` is a [_ChRIS_](https://chrisproject.org/)
-_ds_ plugin which takes in ...  as input files and
-creates ... as output files.
+_ds_ plugin that wraps around FPMMID.
 
 ## Abstract
 
