@@ -1,23 +1,33 @@
-from pathlib import Path
 
-from app import parser, main, DISPLAY_TITLE
+from unittest import TestCase
+from unittest import mock
+from fpmmid import Fpmmid
 
 
-def test_main(mocker, tmp_path: Path):
+class FpmmidTests(TestCase):
     """
-    Simulated test run of the app.
+    Test Fpmmid.
     """
-    inputdir = tmp_path / 'incoming'
-    outputdir = tmp_path / 'outgoing'
-    inputdir.mkdir()
-    outputdir.mkdir()
+    def setUp(self):
+        self.app = Fpmmid()
 
-    options = parser.parse_args(['--name', 'bar'])
+    def test_run(self):
+        """
+        Test the run code.
+        """
+        args = []
+        if self.app.TYPE == 'ds':
+            args.append('inputdir') # you may want to change this inputdir mock
+        args.append('outputdir')  # you may want to change this outputdir mock
 
-    mock_print = mocker.patch('builtins.print')
-    main(options, inputdir, outputdir)
-    mock_print.assert_called_once_with(DISPLAY_TITLE)
+        # you may want to add more of your custom defined optional arguments to test
+        # your app with
+        # eg.
+        # args.append('--custom-int')
+        # args.append(10)
 
-    expected_output_file = outputdir / 'bar.txt'
-    assert expected_output_file.exists()
-    assert expected_output_file.read_text() == 'did nothing successfully!'
+        options = self.app.parse_args(args)
+        self.app.run(options)
+
+        # write your own assertions
+        self.assertEqual(options.outputdir, 'outputdir')
