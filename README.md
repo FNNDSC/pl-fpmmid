@@ -41,7 +41,7 @@ To get started with local command-line usage, use [Apptainer](https://apptainer.
 (a.k.a. Singularity) to run `pl-fpmmid` as a container:
 
 ```shell
-singularity exec docker://fnndsc/pl-fpmmid commandname [--args values...] input/ output/
+singularity exec docker://fnndsc/pl-fpmmid fpmmid [--args values...] input/ output/
 ```
 
 To print its available options, run:
@@ -76,7 +76,7 @@ docker build -t localhost/fnndsc/pl-fpmmid .
 
 ### Running
 
-Mount the source code `app.py` into a container to try out changes without rebuild.
+Mount the source code `fpmmid.py` into a container to try out changes without rebuild.
 
 ```shell
 docker run --rm -it --userns=host -u $(id -u):$(id -g) \
@@ -115,10 +115,4 @@ docker push docker.io/fnndsc/pl-fpmmid:1.2.3
 ```
 
 ### Get JSON Representation
-
-Run [`chris_plugin_info`](https://github.com/FNNDSC/chris_plugin#usage)
-to produce a JSON description of this plugin, which can be uploaded to a _ChRIS Store_.
-
-```shell
-docker run --rm localhost/fnndsc/pl-fpmmid:dev chris_plugin_info > chris_plugin_info.json
-```
+TBD
