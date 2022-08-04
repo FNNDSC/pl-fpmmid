@@ -87,13 +87,12 @@ docker run --rm -it --userns=host -u $(id -u):$(id -g) \
 
 ### Testing
 
-Run unit tests using `pytest`.
+Run unit tests using `nosetests`.
 It's recommended to rebuild the image to ensure that sources are up-to-date.
-Use the option `--build-arg extras_require=dev` to install extra dependencies for testing.
 
 ```shell
-docker build -t localhost/fnndsc/pl-fpmmid:dev --build-arg extras_require=dev .
-docker run --rm -it localhost/fnndsc/pl-fpmmid:dev pytest
+docker build -t localhost/fnndsc/pl-fpmmid:dev .
+docker run --rm -it localhost/fnndsc/pl-fpmmid:dev nosetests
 ```
 
 ## Release
