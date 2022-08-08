@@ -24,10 +24,6 @@ Neurocognition, and Genetics Data Repository) dataset
 `pl-fpmmid` is a [_ChRIS_](https://chrisproject.org/)
 _ds_ plugin that wraps around FPMMID.
 
-## Abstract
-
-...
-
 ## Installation
 
 `pl-fpmmid` is a _[ChRIS](https://chrisproject.org/) plugin_, meaning it can
