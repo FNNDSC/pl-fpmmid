@@ -54,8 +54,8 @@ First, create the input directory and move input data into it.
 
 ```shell
 mkdir incoming/ outgoing/
-mv some.dat other.dat incoming/
-singularity exec docker://fnndsc/pl-fpmmid:latest fpmmid [--args] incoming/ outgoing/
+mv P0997_t1w.nii.gz  incoming/
+singularity exec docker://fnndsc/pl-fpmmid:latest fpmmid -i P0997_t1w.nii.gz incoming/ outgoing/
 ```
 
 ## Development
@@ -76,9 +76,9 @@ Mount the source code `fpmmid.py` into a container to try out changes without re
 
 ```shell
 docker run --rm -it --userns=host -u $(id -u):$(id -g) \
-    -v $PWD/fpmmid.py:/usr/local/lib/python3.10/site-packages/fpmmid.py:ro \
+    -v $PWD/fpmmid.py:/usr/local/lib/python3.6/dist-packages/fpmmid.py:ro \
     -v $PWD/in:/incoming:ro -v $PWD/out:/outgoing:rw -w /outgoing \
-    localhost/fnndsc/pl-fpmmid fpmmid /incoming /outgoing
+    localhost/fnndsc/pl-fpmmid fpmmid -i P0997_t1w.nii.gz /incoming /outgoing
 ```
 
 ### Testing
@@ -110,4 +110,7 @@ docker push docker.io/fnndsc/pl-fpmmid:1.2.3
 ```
 
 ### Get JSON Representation
-TBD
+
+```
+docker run --rm fnndsc/pl-fpmmid:latest fpmmid --json -> fpmmid.json
+```

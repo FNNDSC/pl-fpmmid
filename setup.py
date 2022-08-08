@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='fpmmid',
-    version='1.0.2',
+    version='1.0.3',
     description='A ChRIS DS plugin template',
     author='FNNDSC',
     author_email='dev@babyMRI.org',

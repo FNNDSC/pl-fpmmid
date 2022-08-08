@@ -41,7 +41,8 @@ where necessary.)
 
     SYNOPSIS
 
-        docker run --rm fnndsc/pl-fpmmid fpmmid                     \\
+        docker run --rm fnndsc/pl-fpmmid fpmmid                         \\
+            [-i/--inputFile <inputFile>]                                \\
             [-h] [--help]                                               \\
             [--json]                                                    \\
             [--man]                                                     \\
@@ -58,14 +59,17 @@ where necessary.)
 
             docker run --rm -u $(id -u)                             \
                 -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-                fnndsc/pl-fpmmid fpmmid                        \
+                fnndsc/pl-fpmmid fpmmid                             \
                 /incoming /outgoing
 
     DESCRIPTION
 
-        `fpmmid` ...
+        `fpmmid` is a chris plugin wrapped around FPMMID
 
     ARGS
+        [-i/--inputFile <inputFile>]
+        Specify the name of the input t1w brain image. Default is 
+        P0997_t1w.nii.gz
 
         [-h] [--help]
         If specified, show help message and exit.
@@ -95,7 +99,7 @@ class Fpmmid(ChrisApp):
     An app to ...
     """
     PACKAGE                 = __package__
-    TITLE                   = 'A ChRIS plugin app'
+    TITLE                   = 'A ChRIS plugin app wrapper around FPMMID'
     CATEGORY                = ''
     TYPE                    = 'ds'
     ICON                    = ''   # url of an icon image
