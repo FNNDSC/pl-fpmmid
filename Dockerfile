@@ -9,7 +9,7 @@ RUN ["tar", "xf", "model.tar.gz"]
 
 FROM tensorflow/tensorflow:latest-gpu-py3
 
-COPY --from=download /tmp/model /usr/local/lib/fpmmid
+COPY --from=download /tmp/model /usr/local/lib/fpmmid/model
 
 WORKDIR /usr/local/src
 

@@ -60,7 +60,7 @@ class Config:
         self.init_lr = 0.001
         self.is_parallel = "false"
         # input paths
-        self.model_path = '/usr/local/lib/fpmmid/model'
+        self.model_path = 'model'#'/usr/local/lib/fpmmid/model'
         self.weights_file = 'cw.pickle'
         self.model_file = 'cp.ckpt'
         self.log_file = 'pred.log'
@@ -107,7 +107,6 @@ class Pred:
         """
         This method will build the inference model for a given MRI scan volume
         """
-
         # logging configs
         with open(os.path.join(root_dir, "pred.log"), 'w'):
             pass
@@ -128,7 +127,8 @@ class Pred:
         model_final = un.create_model(self.obj_config.init_lr, inputs, \
                                       self.obj_config.is_parallel, \
 									  outputs, sample_weight=class_weights)
-
+        print(os.path.join(self.obj_config.model_path, \
+                                 self.obj_config.model_file))
         # Inference
         model_final.load_weights(os.path.join(self.obj_config.model_path, \
                                  self.obj_config.model_file)).expect_partial()
