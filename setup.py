@@ -9,7 +9,7 @@ setup(
     author_email='dev@babyMRI.org',
     url='https://github.com/FNNDSC/pl-fpmmid',
     py_modules=['fpmmid'],
-    packages   = ['model','scripts.run','scripts.run.modules'],
+    packages   = ['scripts.run','scripts.run.modules'],
     install_requires=['chrisapp'],
     test_suite       = 'nose.collector',
     tests_require    = ['nose'],
