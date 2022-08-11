@@ -2,6 +2,7 @@
 from unittest import TestCase
 from unittest import mock
 from fpmmid.fpmmid import Fpmmid
+import os
 
 
 class FpmmidTests(TestCase):
@@ -10,27 +11,26 @@ class FpmmidTests(TestCase):
     """
     def setUp(self):
         self.app = Fpmmid()
-
-    def test_run(self):
-        """
-        Test the run code.
-        """
-        args = []
-        if self.app.TYPE == 'ds':
-            args.append('/usr/local/src/test_data') # you may want to change this inputdir mock
-        args.append('outputdir')  # you may want to change this outputdir mock
-        args.append('--inputFileFilter')  # you may want to change this outputdir mock
-        args.append("**/*.nii.gz")
+                
 
         # you may want to add more of your custom defined optional arguments to test
-        # your app with
-        # eg.
-        # args.append('--custom-int')
-        # args.append(10)
+        self.args = []
+        if self.app.TYPE == 'ds':
+            self.args.append('/usr/local/src/test_data') # you may want to change this inputdir mock
+        self.args.append('/usr/local/src/out_data')  # you may want to change this outputdir mock
+        self.args.append('--inputFileFilter')  # you may want to change this inputFileFilter mock
+        self.args.append("**/*.nii.gz")
+        
 
-        options = self.app.parse_args(args)
+    def test_run(self):
+
+        options = self.app.parse_args(self.args)              
         self.app.run(options)
 
-        # write your own assertions
-        results = self.assertEqual(options.outputdir, 'outputdir')
-        print(results)
+        # check length of outputdir
+        count = 0
+        for root_dir, cur_dir, files in os.walk(options.outputdir):
+            count += len(files)
+            
+        self.assertEqual(count, 3)
+
