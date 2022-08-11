@@ -3,13 +3,13 @@ from setuptools import setup
 
 setup(
     name='fpmmid',
-    version='1.0.4',
+    version='1.0.5',
     description='A ChRIS DS plugin template',
     author='FNNDSC',
     author_email='dev@babyMRI.org',
     url='https://github.com/FNNDSC/pl-fpmmid',
     py_modules=['fpmmid'],
-    packages   = ['model','scripts.run','scripts.run.modules'],
+    packages   = ['fpmmid','model','scripts.run','scripts.run.modules'],
     install_requires=['chrisapp'],
     test_suite       = 'nose.collector',
     tests_require    = ['nose'],
@@ -18,7 +18,7 @@ setup(
     python_requires  = '>=3.6',
     entry_points={
         'console_scripts': [
-            'fpmmid = fpmmid:main'
+            'fpmmid = fpmmid.fpmmid:main'
         ]
     }
 

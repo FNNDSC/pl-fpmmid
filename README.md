@@ -55,7 +55,7 @@ First, create the input directory and move input data into it.
 ```shell
 mkdir incoming/ outgoing/
 mv P0997_t1w.nii.gz  incoming/
-singularity exec docker://fnndsc/pl-fpmmid:latest fpmmid -i P0997_t1w.nii.gz incoming/ outgoing/
+singularity exec docker://fnndsc/pl-fpmmid:latest fpmmid incoming/ outgoing/
 ```
 
 ## Development
@@ -78,7 +78,7 @@ Mount the source code `fpmmid.py` into a container to try out changes without re
 docker run --rm -it --userns=host -u $(id -u):$(id -g) \
     -v $PWD/fpmmid.py:/usr/local/lib/python3.6/dist-packages/fpmmid.py:ro \
     -v $PWD/in:/incoming:ro -v $PWD/out:/outgoing:rw -w /outgoing \
-    localhost/fnndsc/pl-fpmmid fpmmid -i P0997_t1w.nii.gz /incoming /outgoing
+    localhost/fnndsc/pl-fpmmid fpmmid /incoming /outgoing
 ```
 
 ### Testing

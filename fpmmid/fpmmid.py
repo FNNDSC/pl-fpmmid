@@ -11,6 +11,8 @@
 import os
 from chrisapp.base import ChrisApp
 from scripts.run import pred
+from .mapper import PathMapper
+from pathlib import Path
 import logging
 import sys
 
@@ -42,7 +44,7 @@ where necessary.)
     SYNOPSIS
 
         docker run --rm fnndsc/pl-fpmmid fpmmid                         \\
-            [-i/--inputFile <inputFile>]                                \\
+            [-i/--inputFileFilter <inputFileFilter>]                    \\
             [-h] [--help]                                               \\
             [--json]                                                    \\
             [--man]                                                     \\
@@ -67,9 +69,10 @@ where necessary.)
         `fpmmid` is a chris plugin wrapped around FPMMID
 
     ARGS
-        [-i/--inputFile <inputFile>]
-        Specify the name of the input t1w brain image. Default is 
-        P0997_t1w.nii.gz
+        [-i/--inputFileFilter <inputFileFilter>]
+        A glob pattern string, default is "**/*.nii.gz",
+        representing the input T1 weighted brain image
+        
 
         [-h] [--help]
         If specified, show help message and exit.
@@ -128,12 +131,12 @@ class Fpmmid(ChrisApp):
         Define the CLI arguments accepted by this plugin app.
         Use self.add_argument to specify a new app argument.
         """
-        self.add_argument(  '--inputFile', '-i',
-                            dest        = 'inputFile',
-                            type        = str,
-                            optional    = True,
-                            help        = 'name of the input (raw) file to process',
-                            default     = "P0997_t1w.nii.gz")
+        self.add_argument(  '--inputFileFilter','-i',
+                            dest         = 'inputFileFilter',
+                            type         = str,
+                            optional     = True,
+                            help         = 'Input file filter',
+                            default      = '**/*.nii.gz')
 
     def run(self, options):
         """
@@ -154,21 +157,17 @@ class Fpmmid(ChrisApp):
         logger.setLevel(logging.DEBUG)
         logger.addHandler(logging.StreamHandler(stream=sys.stdout))
         
-        
-        input_file_path_list = []
-        dir_list = []
-        for root,dirs,files in os.walk(options.inputdir):
-          for file in files:
-            if file == options.inputFile:
-                dir_list.append(root)
-                input_file_path_list.append(os.path.join(root,file))
+        mapper = PathMapper.file_mapper(
+                input_dir=Path(options.inputdir),
+                output_dir=Path(options.outputdir),
+                glob=options.inputFileFilter,
+            )
 
-        for (input_file_path,out_file_path) in zip(input_file_path_list,dir_list):
-            out_file_path = out_file_path.replace(options.inputdir, options.outputdir)
-            os.makedirs(out_file_path,exist_ok = True)
+        for input_file_path,out_file_path in mapper:
+            os.makedirs(out_file_path.parent, exist_ok=True)
             logger.info("Running Inference on {}".format(input_file_path))
-            pred.main(input_file_path,out_file_path, out_file_path)
-            logger.info("Inference finished and stored in {}".format(out_file_path))
+            pred.main(str(input_file_path), str(out_file_path.parent), str( out_file_path.parent))
+            logger.info("Inference finished and stored in {}".format(out_file_path.parent))
 
 
     def show_man_page(self):

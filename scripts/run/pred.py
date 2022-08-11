@@ -127,8 +127,6 @@ class Pred:
         model_final = un.create_model(self.obj_config.init_lr, inputs, \
                                       self.obj_config.is_parallel, \
 									  outputs, sample_weight=class_weights)
-        print(os.path.join(self.obj_config.model_path, \
-                                 self.obj_config.model_file))
         # Inference
         model_final.load_weights(os.path.join(self.obj_config.model_path, \
                                  self.obj_config.model_file)).expect_partial()
