@@ -1,7 +1,7 @@
 
 from unittest import TestCase
 from unittest import mock
-from fpmmid import Fpmmid
+from fpmmid.fpmmid import Fpmmid
 
 
 class FpmmidTests(TestCase):
@@ -17,8 +17,10 @@ class FpmmidTests(TestCase):
         """
         args = []
         if self.app.TYPE == 'ds':
-            args.append('inputdir') # you may want to change this inputdir mock
+            args.append('/usr/local/src/test_data') # you may want to change this inputdir mock
         args.append('outputdir')  # you may want to change this outputdir mock
+        args.append('--inputFileFilter')  # you may want to change this outputdir mock
+        args.append("**/*.nii.gz")
 
         # you may want to add more of your custom defined optional arguments to test
         # your app with
