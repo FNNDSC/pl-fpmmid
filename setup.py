@@ -3,8 +3,8 @@ from setuptools import setup
 
 setup(
     name='fpmmid',
-    version='1.0.5',
-    description='A ChRIS DS plugin template',
+    version='1.0.6',
+    description='A ChRIS DS plugin that wraps around FPMMID',
     author='FNNDSC',
     author_email='dev@babyMRI.org',
     url='https://github.com/FNNDSC/pl-fpmmid',
