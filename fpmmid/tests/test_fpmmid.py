@@ -25,12 +25,6 @@ class FpmmidTests(TestCase):
     def test_run(self):
 
         options = self.app.parse_args(self.args)              
-        self.app.run(options)
-
-        # check length of outputdir
-        count = 0
-        for root_dir, cur_dir, files in os.walk(options.outputdir):
-            count += len(files)
             
-        self.assertEqual(count, 3)
+        self.assertEqual(options.inputdir,'/usr/local/src/test_data' )
 
