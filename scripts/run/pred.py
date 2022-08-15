@@ -60,7 +60,7 @@ class Config:
         self.init_lr = 0.001
         self.is_parallel = "false"
         # input paths
-        self.model_path = 'model'#'/usr/local/lib/fpmmid/model'
+        self.model_path = '/usr/local/src/model'
         self.weights_file = 'cw.pickle'
         self.model_file = 'cp.ckpt'
         self.log_file = 'pred.log'

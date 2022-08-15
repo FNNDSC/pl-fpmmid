@@ -109,7 +109,7 @@ class Fpmmid(ChrisApp):
     MIN_NUMBER_OF_WORKERS   = 1    # Override with the minimum number of workers as int
     MAX_NUMBER_OF_WORKERS   = 1    # Override with the maximum number of workers as int
     MIN_CPU_LIMIT           = 1000 # Override with millicore value as int (1000 millicores == 1 CPU core)
-    MIN_MEMORY_LIMIT        = 200  # Override with memory MegaByte (MB) limit as int
+    MIN_MEMORY_LIMIT        = 4000  # Override with memory MegaByte (MB) limit as int
     MIN_GPU_LIMIT           = 0    # Override with the minimum number of GPUs as int
     MAX_GPU_LIMIT           = 0    # Override with the maximum number of GPUs as int
 
