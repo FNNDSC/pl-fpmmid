@@ -24,17 +24,33 @@ def main(input_path, out_dir, root_dir):
     This function executes the inference and data modules on a
     given MRI scan
     """
-    tf.get_logger().setLevel(logging.ERROR)
+    # Create a logger object
+    logger = logging.getLogger()
+            
+    # set level 
+    logger.setLevel(logging.INFO)
+    
+    # lets create a log file in the o/p directory first
+    log_file = os.path.join(root_dir,'pred.log')
+            
+    lf = open(log_file,"w")
+    
+                
+    # now create and configure logger
+    file_handler = logging.FileHandler(log_file)
+        
+    # add handler
+    logger.addHandler(file_handler)
     st_ = time.time()
     model_name = "fpmmid"
-    #input_path, out_dir, root_dir = seg_u.get_args()
+
     input_data = Subject(model_name)
     dims, num_channels, num_classes, sid, vol = input_data.prep_data(input_path, \
                                                                 root_dir)
 
     et_1 = time.time()
     model = Pred(model_name,out_dir)
-    model.run_pred(dims, num_channels, num_classes, out_dir, root_dir, sid, vol)
+    model.run_pred(dims, num_channels, num_classes, out_dir, root_dir, sid, vol, logger)
     et_2 = time.time()
 
     logging.basicConfig(filename = os.path.join(root_dir, "pred.log"), \
@@ -42,6 +58,11 @@ def main(input_path, out_dir, root_dir):
     logging.info("Elapsed Time - Total: %.2f sec", (et_2 - st_))
     logging.info("Elapsed Time - Data Prep: %.2f sec", (et_1 - st_))
     logging.info("Elapsed Time - Inference: %.2f sec", (et_2 - et_1))
+    
+    # Close logging
+    logger.removeHandler(file_handler)
+    file_handler.close()
+    lf.close()
 
 class Config:
     """
@@ -103,15 +124,11 @@ class Pred:
         self.name = name
         self.obj_config = Config(name, out_dir)
 
-    def run_pred(self, dims, num_channels, num_classes, out_dir, root_dir, sid, vol):
+    def run_pred(self, dims, num_channels, num_classes, out_dir, root_dir, sid, vol, logger):
         """
         This method will build the inference model for a given MRI scan volume
         """
-        # logging configs
-        with open(os.path.join(root_dir, "pred.log"), 'w'):
-            pass
-        logging.basicConfig(filename = os.path.join(root_dir, self.obj_config.log_file), \
-        filemode = 'w',level = logging.INFO)
+
         logging.info("Inference - Started...")
 
         # load weights

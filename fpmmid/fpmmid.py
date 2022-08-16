@@ -152,9 +152,13 @@ class Fpmmid(ChrisApp):
         print("")
         
         
-        # Set up the logger
-        logger = logging.getLogger("eval")
-        logger.setLevel(logging.DEBUG)
+        # Create a logger object
+        logger = logging.getLogger()
+            
+        # set level 
+        logger.setLevel(logging.INFO)
+        
+        # add handler
         logger.addHandler(logging.StreamHandler(stream=sys.stdout))
         
         mapper = PathMapper.file_mapper(
@@ -164,9 +168,13 @@ class Fpmmid(ChrisApp):
             )
 
         for input_file_path,out_file_path in mapper:
+        
             os.makedirs(out_file_path.parent, exist_ok=True)
+            
             logger.info("Running Inference on {}".format(input_file_path))
+            
             pred.main(str(input_file_path), str(out_file_path.parent), str( out_file_path.parent))
+            
             logger.info("Inference finished and stored in {}".format(out_file_path.parent))
 
 
