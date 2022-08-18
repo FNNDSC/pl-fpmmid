@@ -30,8 +30,18 @@ class Subject:
         # Find the dimensions of the imported volume
         logging.info("Data Prep - Started...")
         vol = vlr.volume_reader(os.path.join(input_path))
+        
+        # Logging only
+        ip = vol
+        logging.info("Shape of input numpy:{} \n \
+                      Data type of input numpy:{} \n \
+                      Max value of input numpy:{} \n \
+                      Unique elements are :{} \n \
+                      Count of unique elements : {}" \
+                      .format(ip.shape,ip.dtype,np.max(ip), np.unique(ip), len(np.unique(ip))))
         vol /= np.max(vol)
         dims = list(vol.shape)
+
         vol = vol.reshape(1, dims[0], dims[1], dims[2], self.num_channels)
         sid = self.find_id(input_path)
         logging.info("Data Prep - Finished")

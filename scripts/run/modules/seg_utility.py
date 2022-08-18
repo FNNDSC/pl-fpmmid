@@ -66,6 +66,7 @@ def mask_show(volume, mask_p, mask_p_path, data_type):
     axs[1].axis('off')
     axs[1].set_title('WM, GM, CSF - AI Prediction')
     axs[0].set_title('T1w')
+
     fig.savefig(mask_p_path)
 
 def mask_pred(volume, mask_act, mask_p, mask_p_path, data_type):

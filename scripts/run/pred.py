@@ -153,6 +153,17 @@ class Pred:
         # Write nifti
         self.obj_config.write_nifti(np.argmax(mask_pred[0], axis = 3), sid)
         
+        # Write a report
+        # self.obj_config.write_report()
+        
+        # logging only
+        op = mask_pred[0] # np.argmax(mask_pred[0], axis = 3)
+        logging.info("Shape of output numpy:{} \n \
+                      Data type of output numpy:{} \n \
+                      Max value of output numpy:{} \n \
+                      Unique elements are :{} \n" \
+                      .format(op.shape,op.dtype,np.max(op), np.unique(op, return_counts=True)))
+        
         # Write image
         self.obj_config.write_image(vol[0], mask_pred[0], out_dir, sid)
 
