@@ -119,7 +119,7 @@ class Config:
                         
     def write_report(self, vol_pred, report_file):
         """ Write a consolidated report of the tissues segmented """
-        tissue_names = ["Empty", "White Matter", "Grey Matter", "Cerebospinal Fluid"]
+        tissue_names = ["Empty", "White Matter", "Grey Matter", "Cerebrospinal Fluid"]
         tissues, volumes = np.unique(vol_pred, return_counts=True)
         
         f = open(report_file,'w')
