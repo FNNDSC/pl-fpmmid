@@ -76,7 +76,7 @@ Mount the source code `fpmmid.py` into a container to try out changes without re
 
 ```shell
 docker run --rm -it --userns=host -u $(id -u):$(id -g) \
-    -v $PWD/fpmmid.py:/usr/local/lib/python3.6/dist-packages/fpmmid.py:ro \
+    -v $PWD/fpmmid.py:/usr/local/lib/python3.6/dist-packages/fpmmid/fpmmid.py:ro \
     -v $PWD/in:/incoming:ro -v $PWD/out:/outgoing:rw -w /outgoing \
     localhost/fnndsc/pl-fpmmid fpmmid /incoming /outgoing
 ```
