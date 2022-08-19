@@ -89,6 +89,7 @@ class Config:
         self.out_file_type = 'PNVM'
         self.out_file_format = '.nii.gz'
         self.out_image_format = '.png'
+        self.report_file_name = 'report.txt'
 
     def find_weights(self):
         """
@@ -115,6 +116,19 @@ class Config:
 	                    + '_' \
                         + self.out_file_type \
                         + self.out_image_format), self.out_file_type)
+                        
+    def write_report(self, vol_pred, report_file):
+        """ Write a consolidated report of the tissues segmented """
+        tissue_names = ["Empty", "White Matter", "Grey Matter", "Cerebospinal Fluid"]
+        tissues, volumes = np.unique(vol_pred, return_counts=True)
+        
+        f = open(report_file,'w')
+        f.write ("\n\n ** Brain Segmentation volume Report **\n\n")
+        for tissue,tissue_name, volume in zip(tissues, tissue_names, volumes):
+            
+             f.write("\n{} -- {} -- {} cc\n".format(tissue, tissue_name, round(volume/1000)))
+             
+        f.close()
 
 class Pred:
     """
@@ -154,15 +168,16 @@ class Pred:
         self.obj_config.write_nifti(np.argmax(mask_pred[0], axis = 3), sid)
         
         # Write a report
-        # self.obj_config.write_report()
+        report_file = os.path.join(out_dir, self.obj_config.report_file_name )
+        self.obj_config.write_report(np.argmax(mask_pred[0], axis = 3), report_file)
         
         # logging only
-        op = mask_pred[0] # np.argmax(mask_pred[0], axis = 3)
+        op = np.argmax(mask_pred[0], axis = 3)
         logging.info("Shape of output numpy:{} \n \
                       Data type of output numpy:{} \n \
                       Max value of output numpy:{} \n \
                       Unique elements are :{} \n" \
-                      .format(op.shape,op.dtype,np.max(op), np.unique(op, return_counts=True)))
+                      .format(op.shape,op.dtype,np.max(op), np.unique(op)))
         
         # Write image
         self.obj_config.write_image(vol[0], mask_pred[0], out_dir, sid)
