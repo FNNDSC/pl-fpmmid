@@ -39,13 +39,14 @@ class Subject:
                       Unique elements are :{} \n \
                       Count of unique elements : {}" \
                       .format(ip.shape,ip.dtype,np.max(ip), np.unique(ip), len(np.unique(ip))))
-        vol /= np.max(vol)
-        dims = list(vol.shape)
+        result = vol / np.max(vol)
+        # vol /= np.max(vol)
+        dims = list(result.shape)
 
-        vol = vol.reshape(1, dims[0], dims[1], dims[2], self.num_channels)
+        result = result.reshape(1, dims[0], dims[1], dims[2], self.num_channels)
         sid = self.find_id(input_path)
         logging.info("Data Prep - Finished")
-        return dims, self.num_channels, self.num_classes, sid, vol
+        return dims, self.num_channels, self.num_classes, sid, result
 
     @staticmethod
     def find_id(input_path):
