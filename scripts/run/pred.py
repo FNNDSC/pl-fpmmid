@@ -126,7 +126,7 @@ class Config:
         f.write ("\n\n ** Brain Segmentation volume Report **\n\n")
         for tissue,tissue_name, volume in zip(tissues, tissue_names, volumes):
             
-             f.write("\n{} -- {} -- {} cc\n".format(tissue, tissue_name, round(volume/1000)))
+             f.write("\n{} -- {} -- {} voxels \n".format(tissue, tissue_name, volume))
              
         f.close()
 
