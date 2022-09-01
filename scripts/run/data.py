@@ -54,5 +54,5 @@ class Subject:
         This method will assign a subject id to the input scan
         """
         sid = input_path.split("/")[-1]
-        sid = sid.split("_")[0]
+        #sid = sid.split("_")[0]
         return sid

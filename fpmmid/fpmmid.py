@@ -137,6 +137,7 @@ class Fpmmid(ChrisApp):
                             optional     = True,
                             help         = 'Input file filter',
                             default      = '**/*.nii.gz')
+                            
 
     def run(self, options):
         """

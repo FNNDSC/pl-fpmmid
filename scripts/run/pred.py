@@ -30,8 +30,14 @@ def main(input_path, out_dir, root_dir):
     # set level 
     logger.setLevel(logging.INFO)
     
+    st_ = time.time()
+    model_name = "fpmmid"
+
+    input_data = Subject(model_name)
+    dims, num_channels, num_classes, sid, vol = input_data.prep_data(input_path, \
+                                                                root_dir)
     # lets create a log file in the o/p directory first
-    log_file = os.path.join(root_dir,'pred.log')
+    log_file = os.path.join(root_dir,sid +'_pred.log')
             
     lf = open(log_file,"w")
     
@@ -41,12 +47,6 @@ def main(input_path, out_dir, root_dir):
         
     # add handler
     logger.addHandler(file_handler)
-    st_ = time.time()
-    model_name = "fpmmid"
-
-    input_data = Subject(model_name)
-    dims, num_channels, num_classes, sid, vol = input_data.prep_data(input_path, \
-                                                                root_dir)
 
     et_1 = time.time()
     model = Pred(model_name,out_dir)
@@ -168,7 +168,7 @@ class Pred:
         self.obj_config.write_nifti(np.argmax(mask_pred[0], axis = 3), sid)
         
         # Write a report
-        report_file = os.path.join(out_dir, self.obj_config.report_file_name )
+        report_file = os.path.join(out_dir, sid + "_" +self.obj_config.report_file_name )
         self.obj_config.write_report(np.argmax(mask_pred[0], axis = 3), report_file)
         
         # logging only
