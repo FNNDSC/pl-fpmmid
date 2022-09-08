@@ -33,11 +33,11 @@ class Subject:
         
         # Logging only
         ip = vol
-        logging.info("Shape of input numpy:{} \n \
-                      Data type of input numpy:{} \n \
-                      Max value of input numpy:{} \n \
-                      Unique elements are :{} \n \
-                      Count of unique elements : {}" \
+        logging.info("Shape of input numpy: {} \n \
+                      Data type of input numpy: {} \n \
+                      Max value of input numpy: {} \n \
+                      Unique elements are: {} \n \
+                      Count of unique elements: {}" \
                       .format(ip.shape,ip.dtype,np.max(ip), np.unique(ip), len(np.unique(ip))))
         result = vol / np.max(vol)
         # vol /= np.max(vol)
@@ -54,5 +54,5 @@ class Subject:
         This method will assign a subject id to the input scan
         """
         sid = input_path.split("/")[-1]
-        #sid = sid.split("_")[0]
+        sid = sid.split(".")[0]
         return sid

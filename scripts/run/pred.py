@@ -87,7 +87,7 @@ class Config:
         self.log_file = 'pred.log'
         self.out_path = out_dir
         self.out_file_type = 'PNVM'
-        self.out_file_format = '.nii.gz'
+        self.out_file_format = '.nii'
         self.out_image_format = '.png'
         self.report_file_name = 'report.txt'
 
@@ -105,16 +105,12 @@ class Config:
         write back nifti images
         """
         vlr.volume_writer(vol_pred, os.path.join(self.out_path, sid \
-                                                     + '_' \
-                                                     + self.out_file_type \
                                                      + self.out_file_format))
 
     def write_image(self, vol_input, vol_pred, out_dir, sid):
         """write back 2D mid-slice images"""
         seg_u.mask_show(vol_input, vol_pred, \
                         os.path.join(out_dir, sid \
-	                    + '_' \
-                        + self.out_file_type \
                         + self.out_image_format), self.out_file_type)
                         
     def write_report(self, vol_pred, report_file):
@@ -173,10 +169,10 @@ class Pred:
         
         # logging only
         op = np.argmax(mask_pred[0], axis = 3)
-        logging.info("Shape of output numpy:{} \n \
-                      Data type of output numpy:{} \n \
-                      Max value of output numpy:{} \n \
-                      Unique elements are :{} \n" \
+        logging.info("Shape of output numpy: {} \n \
+                      Data type of output numpy: {} \n \
+                      Max value of output numpy: {} \n \
+                      Unique elements are : {} \n" \
                       .format(op.shape,op.dtype,np.max(op), np.unique(op)))
         
         # Write image
