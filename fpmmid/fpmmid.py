@@ -39,6 +39,7 @@ Gstr_synopsis = """
 
         docker run --rm fnndsc/pl-fpmmid fpmmid                         \\
             [-i/--inputFileFilter <inputFileFilter>]                    \\
+            [-o/--outputFileExtension <outputFileExtension>]            \\
             [-h] [--help]                                               \\
             [--json]                                                    \\
             [--man]                                                     \\
@@ -67,7 +68,10 @@ Gstr_synopsis = """
         A glob pattern string, default is "**/*.nii.gz",
         representing the input T1 weighted brain image
         
-
+        [-o/--outputFileExtension <outputFileExtension>]
+        A string representing the extension of the output
+        brain volume, Default is ".nii"
+        
         [-h] [--help]
         If specified, show help message and exit.
         
@@ -93,7 +97,7 @@ Gstr_synopsis = """
 
 class Fpmmid(ChrisApp):
     """
-    An app to ...
+    An app to do semantic segmentation on input brain MRIs.
     """
     PACKAGE                 = __package__
     TITLE                   = 'A ChRIS plugin app wrapper around FPMMID'
@@ -132,6 +136,12 @@ class Fpmmid(ChrisApp):
                             help         = 'Input file filter',
                             default      = '**/*.nii.gz')
                             
+        self.add_argument(  '--outputFileExtension','-o',
+                            dest         = 'outputFileExtension',
+                            type         = str,
+                            optional     = True,
+                            help         = 'Extension of the output brain volume',
+                            default      = '.nii')
 
     def run(self, options):
         """
@@ -168,7 +178,7 @@ class Fpmmid(ChrisApp):
             
             logger.info("Running Inference on {}".format(input_file_path))
             
-            pred.main(str(input_file_path), str(out_file_path.parent), str( out_file_path.parent))
+            pred.main(str(input_file_path), str(out_file_path.parent), str( out_file_path.parent), options.outputFileExtension)
             
             logger.info("Inference finished and stored in {}".format(out_file_path.parent))
 

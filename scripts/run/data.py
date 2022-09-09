@@ -16,7 +16,6 @@ class Subject:
         self.name = name
         self.num_channels = 1
         self.num_classes = 4
-        self.data_type = "nii.gz"
 
     def prep_data(self, input_path, root_dir):
         """

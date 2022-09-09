@@ -19,7 +19,7 @@ from .data import Subject
 import tensorflow as tf
 from tensorflow import keras as ks
 
-def main(input_path, out_dir, root_dir):
+def main(input_path, out_dir, root_dir, out_file_ext):
     """
     This function executes the inference and data modules on a
     given MRI scan
@@ -49,7 +49,7 @@ def main(input_path, out_dir, root_dir):
     logger.addHandler(file_handler)
 
     et_1 = time.time()
-    model = Pred(model_name,out_dir)
+    model = Pred(model_name,out_dir,out_file_ext)
     model.run_pred(dims, num_channels, num_classes, out_dir, root_dir, sid, vol, logger)
     et_2 = time.time()
 
@@ -69,7 +69,7 @@ class Config:
     This class provides inputs and outputs and pre-post configs
     to the Pred Class
     """
-    def __init__(self, name,out_dir):
+    def __init__(self, name,out_dir, out_file_ext):
         self.name = name
         self.batch_size = 1
         self.shuffle_buffer_size = 1
@@ -87,7 +87,7 @@ class Config:
         self.log_file = 'pred.log'
         self.out_path = out_dir
         self.out_file_type = 'PNVM'
-        self.out_file_format = '.nii'
+        self.out_file_format = out_file_ext
         self.out_image_format = '.png'
         self.report_file_name = 'report.txt'
 
@@ -130,9 +130,9 @@ class Pred:
     """
     This class provides the inference for a given MRI scan
     """
-    def __init__(self, name, out_dir):
+    def __init__(self, name, out_dir, out_file_ext):
         self.name = name
-        self.obj_config = Config(name, out_dir)
+        self.obj_config = Config(name, out_dir, out_file_ext)
 
     def run_pred(self, dims, num_channels, num_classes, out_dir, root_dir, sid, vol, logger):
         """
