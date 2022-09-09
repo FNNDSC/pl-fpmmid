@@ -40,6 +40,7 @@ Gstr_synopsis = """
         docker run --rm fnndsc/pl-fpmmid fpmmid                         \\
             [-i/--inputFileFilter <inputFileFilter>]                    \\
             [-o/--outputFileExtension <outputFileExtension>]            \\
+            [-p/--preserveInputNames]                                   \\
             [-h] [--help]                                               \\
             [--json]                                                    \\
             [--man]                                                     \\
@@ -72,6 +73,9 @@ Gstr_synopsis = """
         A string representing the extension of the output
         brain volume, Default is ".nii"
         
+        [-p/--preserveInputNames]
+        If specified, append input name in all of the
+        generated output files
         [-h] [--help]
         If specified, show help message and exit.
         
@@ -143,6 +147,12 @@ class Fpmmid(ChrisApp):
                             help         = 'Extension of the output brain volume',
                             default      = '.nii')
 
+        self.add_argument(  '--preserveInputNames','-p',
+                            dest         = 'preserveInputNames',
+                            type         = bool,
+                            optional     = True,
+                            help         = 'Preserves original output file names',
+                            default      = False)
     def run(self, options):
         """
         Define the code to be run by this plugin app.
@@ -178,7 +188,8 @@ class Fpmmid(ChrisApp):
             
             logger.info("Running Inference on {}".format(input_file_path))
             
-            pred.main(str(input_file_path), str(out_file_path.parent), str( out_file_path.parent), options.outputFileExtension)
+            pred.main(str(input_file_path), str(out_file_path.parent) \
+                     , str( out_file_path.parent), options.outputFileExtension, options.preserveInputNames)
             
             logger.info("Inference finished and stored in {}".format(out_file_path.parent))
 

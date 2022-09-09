@@ -17,7 +17,7 @@ class Subject:
         self.num_channels = 1
         self.num_classes = 4
 
-    def prep_data(self, input_path, root_dir):
+    def prep_data(self, input_path, root_dir, preserve_input_flag):
         """
         This method converts the mri scan to the input shape needed for
         the neural network
@@ -43,15 +43,19 @@ class Subject:
         dims = list(result.shape)
 
         result = result.reshape(1, dims[0], dims[1], dims[2], self.num_channels)
-        sid = self.find_id(input_path)
+        sid = self.find_id(input_path, preserve_input_flag)
         logging.info("Data Prep - Finished")
         return dims, self.num_channels, self.num_classes, sid, result
 
     @staticmethod
-    def find_id(input_path):
+    def find_id(input_path,preserve_input_flag):
         """
         This method will assign a subject id to the input scan
         """
         sid = input_path.split("/")[-1]
-        sid = sid.split(".")[0]
+        
+        if preserve_input_flag:
+          sid = sid.split(".")[0]
+        else:
+          sid = sid.split("_")[0]
         return sid

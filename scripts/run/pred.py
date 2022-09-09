@@ -19,7 +19,7 @@ from .data import Subject
 import tensorflow as tf
 from tensorflow import keras as ks
 
-def main(input_path, out_dir, root_dir, out_file_ext):
+def main(input_path, out_dir, root_dir, out_file_ext, preserve_input_flag):
     """
     This function executes the inference and data modules on a
     given MRI scan
@@ -35,9 +35,12 @@ def main(input_path, out_dir, root_dir, out_file_ext):
 
     input_data = Subject(model_name)
     dims, num_channels, num_classes, sid, vol = input_data.prep_data(input_path, \
-                                                                root_dir)
+                                                                root_dir, preserve_input_flag)
     # lets create a log file in the o/p directory first
-    log_file = os.path.join(root_dir,sid +'_pred.log')
+    log_file = os.path.join(root_dir,'pred.log')
+    if(preserve_input_flag):
+        log_file = os.path.join(root_dir,sid +'_pred.log')
+
             
     lf = open(log_file,"w")
     
@@ -49,11 +52,11 @@ def main(input_path, out_dir, root_dir, out_file_ext):
     logger.addHandler(file_handler)
 
     et_1 = time.time()
-    model = Pred(model_name,out_dir,out_file_ext)
+    model = Pred(model_name,out_dir,out_file_ext,preserve_input_flag)
     model.run_pred(dims, num_channels, num_classes, out_dir, root_dir, sid, vol, logger)
     et_2 = time.time()
 
-    logging.basicConfig(filename = os.path.join(root_dir, "pred.log"), \
+    logging.basicConfig(filename = log_file, \
     filemode = 'a',level = logging.INFO)
     logging.info("Elapsed Time - Total: %.2f sec", (et_2 - st_))
     logging.info("Elapsed Time - Data Prep: %.2f sec", (et_1 - st_))
@@ -69,7 +72,7 @@ class Config:
     This class provides inputs and outputs and pre-post configs
     to the Pred Class
     """
-    def __init__(self, name,out_dir, out_file_ext):
+    def __init__(self, name,out_dir, out_file_ext, preserve_input_flag):
         self.name = name
         self.batch_size = 1
         self.shuffle_buffer_size = 1
@@ -90,6 +93,7 @@ class Config:
         self.out_file_format = out_file_ext
         self.out_image_format = '.png'
         self.report_file_name = 'report.txt'
+        self.preserve_input_flag = preserve_input_flag
 
     def find_weights(self):
         """
@@ -130,14 +134,18 @@ class Pred:
     """
     This class provides the inference for a given MRI scan
     """
-    def __init__(self, name, out_dir, out_file_ext):
+    def __init__(self, name, out_dir, out_file_ext, preserve_input_flag):
         self.name = name
-        self.obj_config = Config(name, out_dir, out_file_ext)
+        self.obj_config = Config(name, out_dir, out_file_ext, preserve_input_flag)
 
     def run_pred(self, dims, num_channels, num_classes, out_dir, root_dir, sid, vol, logger):
         """
         This method will build the inference model for a given MRI scan volume
         """
+        
+        if(not self.obj_config.preserve_input_flag):
+          sid = sid + "_" + self.obj_config.out_file_type
+
 
         logging.info("Inference - Started...")
 
@@ -164,7 +172,11 @@ class Pred:
         self.obj_config.write_nifti(np.argmax(mask_pred[0], axis = 3), sid)
         
         # Write a report
-        report_file = os.path.join(out_dir, sid + "_" +self.obj_config.report_file_name )
+        report_file = os.path.join(out_dir,self.obj_config.report_file_name)
+        if(self.obj_config.preserve_input_flag):
+          report_file = os.path.join(out_dir, sid + "_" +self.obj_config.report_file_name )
+
+        
         self.obj_config.write_report(np.argmax(mask_pred[0], axis = 3), report_file)
         
         # logging only
@@ -172,7 +184,7 @@ class Pred:
         logging.info("Shape of output numpy: {} \n \
                       Data type of output numpy: {} \n \
                       Max value of output numpy: {} \n \
-                      Unique elements are : {} \n" \
+                      Unique elements are: {} \n" \
                       .format(op.shape,op.dtype,np.max(op), np.unique(op)))
         
         # Write image
