@@ -76,6 +76,7 @@ Gstr_synopsis = """
         [-p/--preserveInputNames]
         If specified, append input name in all of the
         generated output files
+        
         [-h] [--help]
         If specified, show help message and exit.
         
@@ -151,7 +152,7 @@ class Fpmmid(ChrisApp):
                             dest         = 'preserveInputNames',
                             type         = bool,
                             optional     = True,
-                            help         = 'Preserves original output file names',
+                            help         = 'Preserves original intput file names',
                             default      = False)
     def run(self, options):
         """
