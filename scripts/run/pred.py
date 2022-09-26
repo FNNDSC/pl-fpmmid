@@ -169,7 +169,8 @@ class Pred:
         logging.info("Inference - Finished.")
 
         # Write nifti
-        self.obj_config.write_nifti(np.argmax(mask_pred[0], axis = 3), sid)
+        nifti_vol = np.argmax(mask_pred[0], axis = 3).astype(np.int16)
+        self.obj_config.write_nifti(nifti_vol, sid)
         
         # Write a report
         report_file = os.path.join(out_dir,self.obj_config.report_file_name)
@@ -177,10 +178,10 @@ class Pred:
           report_file = os.path.join(out_dir, sid + "_" +self.obj_config.report_file_name )
 
         
-        self.obj_config.write_report(np.argmax(mask_pred[0], axis = 3), report_file)
+        self.obj_config.write_report(nifti_vol, report_file)
         
         # logging only
-        op = np.argmax(mask_pred[0], axis = 3)
+        op = nifti_vol
         logging.info("Shape of output numpy: {} \n \
                       Data type of output numpy: {} \n \
                       Max value of output numpy: {} \n \
